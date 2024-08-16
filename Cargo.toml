@@ -87,9 +87,15 @@ webgpu = { git = "https://github.com/servo/servo.git", rev = "28430ba" }
 # Servo org crates
 servo-media = { git = "https://github.com/servo/media" }
 servo-media-dummy = { git = "https://github.com/servo/media" }
-style = { git = "https://github.com/servo/stylo", branch = "2024-07-16", features = ["servo"] }
-style_traits = { git = "https://github.com/servo/stylo", branch = "2024-07-16", features = ["servo"] }
-webrender = { git = "https://github.com/servo/webrender", branch = "0.65", features = ["capture"] }
+style = { git = "https://github.com/servo/stylo", branch = "2024-07-16", features = [
+  "servo",
+] }
+style_traits = { git = "https://github.com/servo/stylo", branch = "2024-07-16", features = [
+  "servo",
+] }
+webrender = { git = "https://github.com/servo/webrender", branch = "0.65", features = [
+  "capture",
+] }
 webrender_api = { git = "https://github.com/servo/webrender", branch = "0.65" }
 webxr = { git = "https://github.com/servo/webxr", features = ["headless"] }
 webxr-api = { git = "https://github.com/servo/webxr" }
@@ -105,7 +111,11 @@ mozangle = { version = "0.5.1", features = ["egl", "build_dlls"] }
 
 [target.'cfg(any(target_os = "ios", target_os = "macos"))'.dependencies]
 objc2 = "0.5"
-objc2-app-kit = {version = "0.2", features = ["NSView", "NSResponder", "NSWindow"]}
+objc2-app-kit = { version = "0.2", features = [
+  "NSView",
+  "NSResponder",
+  "NSWindow",
+] }
 
 [[test]]
 name = "general"
@@ -114,3 +124,11 @@ harness = false
 [profile.release-lto]
 inherits = "release"
 lto = true
+
+# Enable a small amount of optimization in the dev profile.
+[profile.dev]
+opt-level = 1
+
+# Enable a large amount of optimization in the dev profile for dependencies.
+[profile.dev.package."*"]
+opt-level = 3
